@@ -3,7 +3,7 @@ import { Facebook, Instagram, Twitter } from 'lucide-react'; // optional icons
 
 export default function Footer() {
   return (
-    <footer className="bg-[#0f0f0f] text-gray-400 px-6 py-10">
+    <footer className="bg-[#0f0f0f] text-gray-400 px-6 py-10  ">
       <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-8">
 
         {/* Brand */}

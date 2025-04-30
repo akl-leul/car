@@ -12,7 +12,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
     <html lang="en">
       <body>
         <Navbar />
-        <main className="flex-grow">{children}</main>
+        <main >{children}</main>
       </body>
       <Footer />
     </html>
