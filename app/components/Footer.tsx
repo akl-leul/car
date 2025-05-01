@@ -14,10 +14,10 @@ export default function Footer() {
 
         {/* Links */}
         <div className="flex flex-col space-y-2">
-          <a href="/cars" className="footer-link">cars</a>
+          <a href="/cars" className="footer-link">Cars</a>
           <a href="#about" className="footer-link">About Us</a>
           <a href="#contact" className="footer-link">Contact</a>
-          <a href="#privacy" className="footer-link">Privacy Policy</a>
+          <a href="/privacy" className="footer-link">Privacy Policy</a>
         </div>
 
         {/* Socials */}

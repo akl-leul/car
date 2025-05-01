@@ -3,8 +3,8 @@ import Navbar from './components/Navbar';
 import Footer from './components/Footer'; 
 
 export const metadata = {
-  title: 'My Next App',
-  description: 'Next.js with Tailwind CSS',
+  title: 'Luxcars',
+  description: 'Find Your Dream Car',
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
