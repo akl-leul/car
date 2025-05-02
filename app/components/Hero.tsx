@@ -114,7 +114,7 @@ export default function Example() {
         
       </div>
       <div className="relative z-20 bg-gray-50 py-12">
-  <h3 className="text-2xl font-semibold text-center mb-8">Featured Luxury Cars</h3>
+  <h3 className="text-2xl font-semibold text-center mb-10">Featured Luxury Cars</h3>
   <div className="flex overflow-x-auto gap-8 px-4"> 
     <div className="min-w-[300px] bg-white shadow-xl rounded-lg p-4">
       <img src="/rolls royce.webp" alt="Car 1" className="w-full h-40 object-cover rounded" />
