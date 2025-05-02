@@ -49,7 +49,7 @@ export default function Example() {
           backgroundPosition: 'center',
           backgroundAttachment: 'fixed', // Parallax effect
           filter: 'brightness(0.6)',
-          minHeight: '700px',
+          minHeight: '850px',
         }}
         aria-hidden="true"
       />

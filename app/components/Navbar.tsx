@@ -34,7 +34,7 @@ export default function Navbar() {
   return (
     <>
       {/* Main Navbar */}
-      <nav className=" bg-black text-white px-6 py-4 shadow-lg fixed top-0 left-0 right-0 z-50 border-b border-gray-800">
+      <nav className=" bg-black text-white px-6 py-6 shadow-lg fixed top-0 left-0 right-0 z-50 border-b border-gray-800">
         <div className="max-w-7xl mx-auto flex justify-between items-center">
           <Link href="/" className="flex items-center gap-2 text-2xl font-extrabold tracking-wide">
             <Car className="w-8 h-8 text-indigo-500" />
