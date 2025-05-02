@@ -2,78 +2,100 @@
 
 import Link from 'next/link';
 import { useState, useCallback } from 'react';
-import { X, Menu, Car } from 'lucide-react'; // Optional: install lucide icons
+import { X, Menu, Car } from 'lucide-react';
+import { usePathname } from 'next/navigation';
 
-// Reusable Link component to avoid duplication
-const NavLink = ({ href, children, onClick }: { href: string; children: React.ReactNode; onClick?: () => void }) => (
-  <Link
-    href={href}
-    className="hover:text-indigo-600 transition-colors duration-300 ease-in-out"
-    onClick={onClick}
-  >
-    {children}
-  </Link>
-);
+// NavLink now supports active highlighting
+const NavLink = ({ href, children, onClick }) => {
+  const pathname = usePathname();
+  const isActive = pathname === href;
+  return (
+    <Link
+      href={href}
+      className={`transition-colors duration-200 ease-in-out text-lg font-medium
+        ${isActive
+          ? 'text-indigo-500 underline underline-offset-4'
+          : 'hover:text-indigo-400 text-white'}
+      `}
+      onClick={onClick}
+      aria-current={isActive ? 'page' : undefined}
+    >
+      {children}
+    </Link>
+  );
+};
 
 export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
 
   const handleMenuToggle = useCallback(() => setIsOpen((prev) => !prev), []);
+  const closeMenu = useCallback(() => setIsOpen(false), []);
 
   return (
     <>
-      <nav className="bg-gradient-to-r from-[#1a1a1a] to-[#333333] text-white px-6 py-4 shadow-xl fixed top-0 left-0 right-0 z-50 border-b-2 border-gray-800">
+      {/* Main Navbar */}
+      <nav className=" bg-black text-white px-6 py-4 shadow-lg fixed top-0 left-0 right-0 z-50 border-b border-gray-800">
         <div className="max-w-7xl mx-auto flex justify-between items-center">
-          <Link href="/" className="text-3xl font-extrabold text-white tracking-wide flex items-center">
-          <Car className="w-10 h-10" />Luxcars
+          <Link href="/" className="flex items-center gap-2 text-2xl font-extrabold tracking-wide">
+            <Car className="w-8 h-8 text-indigo-500" />
+            Luxcars
           </Link>
 
           {/* Desktop Menu */}
-          <div className="hidden md:flex space-x-8 text-sm font-medium">
-            <NavLink href="/" onClick={() => setIsOpen(false)}>Home</NavLink>
-            <NavLink href="/cars" onClick={() => setIsOpen(false)}>Cars</NavLink>
-            <NavLink href="/about" onClick={() => setIsOpen(false)}>About</NavLink>
-            <NavLink href="/contact" onClick={() => setIsOpen(false)}>Contact</NavLink>
+          <div className="hidden md:flex space-x-8">
+            <NavLink href="/" onClick={closeMenu}>Home</NavLink>
+            <NavLink href="/cars" onClick={closeMenu}>Cars</NavLink>
+            <NavLink href="/about" onClick={closeMenu}>About</NavLink>
+            <NavLink href="/contact" onClick={closeMenu}>Contact</NavLink>
           </div>
 
-          {/* Mobile Menu Button */}
-          <button onClick={handleMenuToggle} className="md:hidden text-white">
-            <Menu size={28} />
+          {/* Hamburger Button */}
+          <button
+            onClick={handleMenuToggle}
+            className="md:hidden text-white focus:outline-none"
+            aria-label={isOpen ? "Close menu" : "Open menu"}
+          >
+            <Menu size={32} />
           </button>
         </div>
       </nav>
 
-      {/* Overlay */}
+      {/* Mobile Overlay */}
       {isOpen && (
         <div
-          className="fixed inset-0 bg-black/70 z-40"
-          onClick={handleMenuToggle}
-          role="button"
+          className="fixed inset-0 bg-black/60 z-40 transition-opacity"
+          onClick={closeMenu}
           aria-label="Close menu"
+          tabIndex={-1}
         />
       )}
 
-      {/* Side Drawer */}
+      {/* Mobile Side Drawer */}
       <aside
-        className={`fixed top-0 right-0 w-72 h-full bg-gradient-to-b from-[#1c1c1e] to-[#2a2a2e] text-white z-50 transform transition-transform duration-300 ${
+        className={`fixed top-0 right-0 w-72 h-full bg-gradient-to-b from-[#23232a] to-[#18181b] text-white z-50 transform transition-transform duration-300 ${
           isOpen ? 'translate-x-0' : 'translate-x-full'
         }`}
         role="navigation"
         aria-hidden={!isOpen}
       >
-        <div className="flex justify-between items-center p-6 border-b border-gray-700">
-          <span className="text-2xl font-semibold "><Car className="w-10 h-10" />Luxcars</span>
-          <button onClick={handleMenuToggle} aria-label="Close menu">
-            <X size={24} />
+        <div className="flex justify-between items-center px-6 py-6 border-b border-gray-700">
+          <span className="flex items-center gap-2 text-2xl font-bold">
+            <Car className="w-8 h-8 text-indigo-500" />
+            Luxcars
+          </span>
+          <button onClick={closeMenu} aria-label="Close menu">
+            <X size={28} />
           </button>
         </div>
-        <nav className="flex flex-col space-y-6 p-6">
-          <NavLink href="/" onClick={handleMenuToggle}>Home</NavLink>
-          <NavLink href="/cars" onClick={handleMenuToggle}>Cars</NavLink>
-          <NavLink href="/about" onClick={handleMenuToggle}>About</NavLink>
-          <NavLink href="/contact" onClick={handleMenuToggle}>Contact</NavLink>
+        <nav className="flex flex-col space-y-6 px-6 pt-8">
+          <NavLink href="/" onClick={closeMenu}>Home</NavLink>
+          <NavLink href="/cars" onClick={closeMenu}>Cars</NavLink>
+          <NavLink href="/about" onClick={closeMenu}>About</NavLink>
+          <NavLink href="/contact" onClick={closeMenu}>Contact</NavLink>
         </nav>
       </aside>
+      {/* Spacer for fixed navbar */}
+      <div className="h-20 md:h-20" />
     </>
   );
 }

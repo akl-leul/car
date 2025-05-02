@@ -4,7 +4,7 @@ import { ShieldCheck, Mail, Globe, Eye, UserCheck } from "lucide-react";
 
 export default function PrivacyPolicy() {
   return (
-    <div className="max-w-3xl mx-auto px-6 py-12 space-y-10 mt-24">
+    <div className="max-w-3xl mx-auto px-6 py-12 space-y-10 mt-24 mb-10 shadow-2xl">
       {/* Header */}
       <div className="flex items-center gap-3">
         <ShieldCheck className="text-indigo-600 w-8 h-8" />
