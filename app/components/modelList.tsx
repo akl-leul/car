@@ -1,7 +1,11 @@
 'use client';
 
-import { useState } from 'react';
-import { Gauge, Package , Settings, Car, Search  } from 'lucide-react';
+import React, { useState, useEffect } from 'react'; 
+import Snackbar from '@mui/material/Snackbar';
+import MuiAlert from '@mui/material/Alert'; 
+
+import { Gauge, Package, Settings, Car, Search, Filter, ChevronDown, ChevronUp, RefreshCw, Zap, Clock, Award } from 'lucide-react';
+
 
 const products = [
   {
@@ -373,97 +377,362 @@ const products = [
 },
 ];
 
-
 export default function ModelList() {
   const [selectedCar, setSelectedCar] = useState(null);
   const [searchTerm, setSearchTerm] = useState('');
-  const filteredResults = products.filter((product) =>
-    (
+  const [currentPage, setCurrentPage] = useState(1);
+  const [itemsPerPage, setItemsPerPage] = useState(8);
+  const [quickViewCar, setQuickViewCar] = useState(null);
+  const [showFilters, setShowFilters] = useState(false);
+  const [snackbarOpen, setSnackbarOpen] = useState(false);
+  
+  const [filters, setFilters] = useState({
+    priceRange: [0, 5000000],
+    engineTypes: [],
+    drivetrain: [],
+    sortBy: 'default'
+  });
+  
+  useEffect(() => {
+    const urlParams = new URLSearchParams(window.location.search);
+    const carId = urlParams.get('carId');
+    if (carId) {
+      const car = products.find(p => p.id === Number(carId));
+      if (car) setSelectedCar(car);
+    }
+  }, []);
+  const handleShareClick = () => {
+    const url = new URL(window.location);
+    url.searchParams.set('carId', selectedCar.id);
+    window.history.replaceState({}, '', url);
+    navigator.clipboard.writeText(url.toString());
+    setSnackbarOpen(true);
+  };
+const handleClose = (event, reason) => {
+  if (reason === 'clickaway') {
+    return;
+  }
+  setSnackbarOpen(false);
+};
+const Alert = React.forwardRef(function Alert(props, ref) {
+  return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
+});
+  
+  // Apply filters and search
+  const filteredProducts = products.filter((product) => {
+    // Search filter
+    const searchMatch = (
       product.name +
       product.description +
       product.specs.engineType +
       product.specs.horsepower +
       product.specs.drivetrain
-    ).toLowerCase().includes(searchTerm.toLowerCase())
-  );
-  return (
+    ).toLowerCase().includes(searchTerm.toLowerCase());
     
+    // Price filter
+    const priceMatch = parseInt(product.price.replace(/[^0-9]/g, '')) >= filters.priceRange[0] && 
+                      parseInt(product.price.replace(/[^0-9]/g, '')) <= filters.priceRange[1];
+    
+    // Engine type filter
+    const engineMatch = filters.engineTypes.length === 0 || 
+                       filters.engineTypes.some(type => product.specs.engineType.toLowerCase().includes(type.toLowerCase()));
+    
+    // Drivetrain filter
+    const drivetrainMatch = filters.drivetrain.length === 0 || 
+                           filters.drivetrain.includes(product.specs.drivetrain);
+    
+    return searchMatch && priceMatch && engineMatch && drivetrainMatch;
+  });
+  
+  // Sort products
+  const sortedProducts = [...filteredProducts].sort((a, b) => {
+    switch(filters.sortBy) {
+      case 'price-low':
+        return parseInt(a.price.replace(/[^0-9]/g, '')) - parseInt(b.price.replace(/[^0-9]/g, ''));
+      case 'price-high':
+        return parseInt(b.price.replace(/[^0-9]/g, '')) - parseInt(a.price.replace(/[^0-9]/g, ''));
+      case 'horsepower':
+        return parseInt(b.specs.horsepower) - parseInt(a.specs.horsepower);
+      default:
+        return 0;
+    }
+  });
+  
+  // Pagination
+  const indexOfLastItem = currentPage * itemsPerPage;
+  const indexOfFirstItem = indexOfLastItem - itemsPerPage;
+  const currentItems = sortedProducts.slice(indexOfFirstItem, indexOfLastItem);
+  const totalPages = Math.ceil(sortedProducts.length / itemsPerPage);
+  
+  // Get badge for product
+  const getBadge = (product) => {
+    if (product.specs.engineType.toLowerCase().includes('electric')) return { text: 'Electric', icon: <Zap className="w-3 h-3" />, color: 'bg-green-100 text-green-800' };
+    if (product.id > 17) return { text: 'New', icon: null, color: 'bg-blue-100 text-blue-800' };
+    if (product.price.replace(/[^0-9]/g, '') > 1000000) return { text: 'Premium', icon: <Award className="w-3 h-3" />, color: 'bg-purple-100 text-purple-800' };
+    if (product.id === 3 || product.id === 8 || product.id === 13) return { text: 'Best Value', icon: null, color: 'bg-yellow-100 text-yellow-800' };
+    return null;
+  };
+  
+  return (
     <div className="bg-white mt-3">
-     
-
       <div className="mx-auto max-w-2xl px-4 py-16 sm:px-6 sm:py-24 lg:max-w-7xl lg:px-8">
-        <h2 className="font-bold text-3xl mb-6">Luxury Cars </h2>
-        <div className="relative max-w-2xl mx-auto mb-5">
-  <div className="flex items-center border border-gray-300 rounded-full bg-white shadow-sm focus-within:ring-2 focus-within:ring-gray-500 transition-all">
-    <span className="pl-4 text-gray-500">
-      <Search className="w-5 h-5" />
-    </span>
-    <input
-      type="text"
-      placeholder="Search for cars, models, brands..."
-      value={searchTerm}
-      onChange={(e) => setSearchTerm(e.target.value)}
-      className="w-full px-4 py-2 rounded-full focus:outline-none text-gray-800 placeholder-gray-400"
-    />
-  </div>
-
-  {searchTerm && filteredResults.length > 0 && (
-    <div className="absolute z-20 mt-2 w-full bg-white border border-gray-300 rounded-md shadow-lg max-h-60 overflow-y-auto">
-      {filteredResults.map((product) => (
-      
-        <div
-          key={product.id}
-          onClick={() => {
-            setSelectedCar(product);
-            setSearchTerm('');
-          }}
-          className="px-4 py-3 hover:bg-blue-50 cursor-pointer transition"
-        >
-          <div className="font-semibold text-gray-800"> <Car className="w-4 h-4" />{product.name}</div>
-          <div className="text-sm text-gray-500">{product.price}</div>
-        </div>
-      ))}
-    </div>
-  )}
-
-  {searchTerm && filteredResults.length === 0 && (
-    <div className="absolute z-20 mt-2 w-full bg-white border border-gray-300 rounded-md shadow-lg p-4 text-gray-500">
-      No cars found matching your search.
-    </div>
-  )}
-</div>
-        <div className="grid grid-cols-1 gap-x-6 gap-y-10 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 xl:gap-x-8">
-          {products.map((product) => (
-            <button
-              key={product.id}
-              onClick={() => setSelectedCar(product)}
-              className="group  cursor-pointer rounded-lg shadow-2xl text-left"
-            >
-              <img
-                alt={product.imageAlt}
-                src={product.imageSrc}
-                className="aspect-square w-full rounded-lg bg-gray-200 object-cover group-hover:opacity-75 xl:aspect-7/8"
+        <h2 className="font-bold text-3xl mb-6">Luxury Cars</h2>
+        
+        {/* Search and filter section */}
+        <div className="mb-8">
+          <div className="relative max-w-2xl mx-auto mb-5">
+            <div className="flex items-center border border-gray-300 rounded-full bg-white shadow-sm focus-within:ring-2 focus-within:ring-gray-500 transition-all">
+              <span className="pl-4 text-gray-500">
+                <Search className="w-5 h-5" />
+              </span>
+              <input
+                type="text"
+                placeholder="Search for cars, models, brands..."
+                value={searchTerm}
+                onChange={(e) => setSearchTerm(e.target.value)}
+                className="w-full px-4 py-2 rounded-full focus:outline-none text-gray-800 placeholder-gray-400"
               />
-              <h3 className="mt-4 ml-1 text-sm text-gray-700">{product.name}</h3>
-              <p className="mt-1 ml-1 text-lg font-medium text-gray-900">{product.price}</p>
-            </button>
-          ))}
-        </div>
+              <button 
+                onClick={() => setShowFilters(!showFilters)}
+                className="pr-4 text-gray-500 hover:text-gray-700"
+              >
+                <Filter className="w-5 h-5" />
+              </button>
+            </div>
+            
+            {searchTerm && filteredProducts.length > 0 && (
+              <div className="absolute z-20 mt-2 w-full bg-white border border-gray-300 rounded-md shadow-lg max-h-60 overflow-y-auto">
+                {filteredProducts.slice(0, 5).map((product) => (
+                  <div
+                    key={product.id}
+                    onClick={() => {
+                      setSelectedCar(product);
+                      setSearchTerm('');
+                    }}
+                    className="px-4 py-3 hover:bg-blue-50 cursor-pointer transition"
+                  >
+                    <div className="font-semibold text-gray-800"><Car className="w-4 h-4 inline mr-2" />{product.name}</div>
+                    <div className="text-sm text-gray-500">{product.price}</div>
+                  </div>
+                ))}
+              </div>
+            )}
 
-        {/* Modal */}
+            {searchTerm && filteredProducts.length === 0 && (
+              <div className="absolute z-20 mt-2 w-full bg-white border border-gray-300 rounded-md shadow-lg p-4 text-gray-500">
+                No cars found matching your search.
+              </div>
+            )}
+          </div>
+          
+          {/* Filter panel */}
+          {showFilters && (
+            <div className="bg-gray-50 p-4 rounded-lg shadow-sm mb-6 transition-all">
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-1">Price Range</label>
+                  <select 
+                    className="w-full p-2 border border-gray-300 rounded-md"
+                    onChange={(e) => {
+                      const [min, max] = e.target.value.split('-').map(Number);
+                      setFilters({...filters, priceRange: [min, max]});
+                    }}
+                  >
+                    <option value="0-5000000">All Prices</option>
+                    <option value="0-100000">Under $100,000</option>
+                    <option value="100000-300000">$100,000 - $300,000</option>
+                    <option value="300000-1000000">$300,000 - $1,000,000</option>
+                    <option value="1000000-5000000">$1,000,000+</option>
+                  </select>
+                </div>
+                
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-1">Engine Type</label>
+                  <select 
+                    className="w-full p-2 border border-gray-300 rounded-md"
+                    onChange={(e) => {
+                      const value = e.target.value;
+                      setFilters({...filters, engineTypes: value ? [value] : []});
+                    }}
+                  >
+                    <option value="">All Types</option>
+                    <option value="V8">V8</option>
+                    <option value="V12">V12</option>
+                    <option value="Electric">Electric</option>
+                    <option value="Hybrid">Hybrid</option>
+                    <option value="Turbo">Turbo</option>
+                  </select>
+                </div>
+                
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-1">Sort By</label>
+                  <select 
+                    className="w-full p-2 border border-gray-300 rounded-md"
+                    onChange={(e) => setFilters({...filters, sortBy: e.target.value})}
+                  >
+                    <option value="default">Featured</option>
+                    <option value="price-low">Price: Low to High</option>
+                    <option value="price-high">Price: High to Low</option>
+                    <option value="horsepower">Horsepower</option>
+                  </select>
+                </div>
+              </div>
+            </div>
+          )}
+        </div>
+        
+        {/* Product grid */}
+        <div className="grid grid-cols-1 gap-x-6 gap-y-10 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 xl:gap-x-8">
+          {currentItems.map((product) => {
+            const badge = getBadge(product);
+            return (
+              <div
+                key={product.id}
+                className="group cursor-pointer rounded-lg shadow-md hover:shadow-xl transition-all duration-300 text-left relative overflow-hidden"
+              >
+                {/* Badge */}
+                {badge && (
+                  <span className={`absolute top-2 right-2 z-10 inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium ${badge.color}`}>
+                    {badge.icon && <span className="mr-1">{badge.icon}</span>}
+                    {badge.text}
+                  </span>
+                )}
+                
+                {/* Image with hover zoom effect */}
+                <div className="relative overflow-hidden rounded-t-lg">
+                  <img
+                    alt={product.imageAlt}
+                    src={product.imageSrc}
+                    className="aspect-square w-full rounded-t-lg bg-gray-200 object-cover transition-transform duration-500 group-hover:scale-110"
+                  />
+                  
+                  {/* Quick view button */}
+                  <div className="absolute inset-0 bg-black bg-opacity-0 group-hover:bg-opacity-30 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                    <button 
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        setQuickViewCar(product);
+                      }}
+                      className="bg-white text-gray-800 px-4 py-2 rounded-md font-medium text-sm hover:bg-gray-100 transition-colors"
+                    >
+                      Quick View
+                    </button>
+                  </div>
+                </div>
+                
+                <div className="p-4">
+                  <h3 className="text-sm text-gray-700 font-medium">{product.name}</h3>
+                  <p className="mt-1 text-lg font-bold text-gray-900">{product.price}</p>
+                  <div className="mt-2 flex items-center text-xs text-gray-500">
+                    <Gauge className="w-3 h-3 mr-1" />
+                    <span>{product.specs.horsepower}</span>
+                    <span className="mx-2">•</span>
+                    <Car className="w-3 h-3 mr-1" />
+                    <span>{product.specs.drivetrain}</span>
+                  </div>
+                  <button 
+                    onClick={() => setSelectedCar(product)}
+                    className="mt-3 w-full bg-gray-100 hover:bg-gray-200 text-gray-800 font-medium py-2 px-4 rounded-md transition-colors text-sm"
+                  >
+                    View Details
+                  </button>
+                </div>
+              </div>
+            );
+          })}
+        </div>
+        
+        {/* Pagination */}
+        {totalPages > 1 && (
+          <div className="flex justify-center items-center space-x-2 mt-10">
+            <button
+              disabled={currentPage === 1}
+              onClick={() => setCurrentPage(currentPage - 1)}
+              className="px-3 py-1 rounded-md bg-gray-100 text-gray-800 disabled:opacity-50"
+            >
+              Previous
+            </button>
+            
+            {Array.from({ length: totalPages }, (_, i) => i + 1).map((page) => (
+              <button
+                key={page}
+                onClick={() => setCurrentPage(page)}
+                className={`px-3 py-1 rounded-md ${
+                  currentPage === page ? 'bg-gray-800 text-white' : 'bg-gray-100 text-gray-800'
+                }`}
+              >
+                {page}
+              </button>
+            ))}
+            
+            <button
+              disabled={currentPage === totalPages}
+              onClick={() => setCurrentPage(currentPage + 1)}
+              className="px-3 py-1 rounded-md bg-gray-100 text-gray-800 disabled:opacity-50"
+            >
+              Next
+            </button>
+          </div>
+        )}
+        
+        {/* Quick View Modal */}
+        {quickViewCar && (
+          <div className="fixed inset-0 z-50 flex items-center justify-center backdrop-blur-sm bg-black bg-opacity-30" onClick={() => setQuickViewCar(null)}>
+            <div className="bg-white p-4 rounded-lg shadow-xl max-w-md w-full relative" onClick={e => e.stopPropagation()}>
+              <button
+                onClick={() => setQuickViewCar(null)}
+                className="absolute top-2 right-2 text-gray-400 hover:text-gray-600 text-xl cursor-pointer"
+              >
+                ×
+              </button>
+              <div className="flex space-x-4">
+                <img
+                  src={quickViewCar.imageSrc}
+                  alt={quickViewCar.imageAlt}
+                  className="w-40 h-40 object-cover rounded"
+                />
+                <div>
+                  <h2 className="text-xl font-semibold">{quickViewCar.name}</h2>
+                  <p className="text-lg font-bold mt-1">{quickViewCar.price}</p>
+                  <div className="mt-2 space-y-1 text-sm">
+                    <div className="flex items-center">
+                      <Gauge className="w-4 h-4 text-gray-500 mr-1" />
+                      <span>{quickViewCar.specs.horsepower}</span>
+                    </div>
+                    <div className="flex items-center">
+                      <Package className="w-4 h-4 text-gray-500 mr-1" />
+                      <span>{quickViewCar.specs.engineType}</span>
+                    </div>
+                  </div>
+                  <button 
+                    onClick={() => {
+                      setSelectedCar(quickViewCar);
+                      setQuickViewCar(null);
+                    }}
+                    className="mt-3 bg-gray-800 text-white px-4 py-2 rounded text-sm hover:bg-gray-700"
+                  >
+                    View Full Details
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        )}
+        
+        {/* Full Details Modal */}
         {selectedCar && (
-          <div className="fixed inset-0 z-50 flex items-center justify-center backdrop-blur-xs">
-            <div className="bg-[#eee] p-6 rounded-lg shadow-xl max-w-md w-full relative">
+          <div className="fixed inset-0 z-50 flex items-center justify-center backdrop-blur-sm bg-black bg-opacity-30">
+            <div className="bg-white p-6 rounded-lg shadow-xl max-w-md w-full relative">
               <button
                 onClick={() => setSelectedCar(null)}
-                className="absolute   top-2 right-2 text-gray-400 hover:text-gray-600 text-xl cursor-pointer"
+                className="absolute top-2 right-2 text-gray-400 hover:text-gray-600 text-xl cursor-pointer"
               >
                 ×
               </button>
               <img
                 src={selectedCar.imageSrc}
                 alt={selectedCar.imageAlt}
-                className="w-full h-48 object-cover rounded mb-4 shadow-2xl"
+                className="w-full h-48 object-cover rounded mb-4 shadow-md"
               />
               <h2 className="text-2xl font-semibold">{selectedCar.name}</h2>
               <p className="text-gray-600 mt-2">{selectedCar.description}</p>
@@ -471,7 +740,7 @@ export default function ModelList() {
 
               <div className="mt-4 space-y-2 text-sm text-gray-700">
                 <div className="flex items-center gap-2">
-                  <Package  className="w-4 h-4 text-gray-500" />
+                  <Package className="w-4 h-4 text-gray-500" />
                   <span><strong>Engine:</strong> {selectedCar.specs.engineType} ({selectedCar.specs.engineLiter})</span>
                 </div>
                 <div className="flex items-center gap-2">
@@ -486,6 +755,19 @@ export default function ModelList() {
                   <Car className="w-4 h-4 text-gray-500" />
                   <span><strong>Drivetrain:</strong> {selectedCar.specs.drivetrain}</span>
                 </div>
+                <button
+onClick={handleShareClick}
+className="mt-4 flex items-center justify-center w-full bg-blue-600 text-white py-2 px-4 rounded hover:bg-blue-700 transition"
+>
+Share this car
+</button>
+        
+    <Snackbar open={snackbarOpen} autoHideDuration={3000} onClose={handleClose}>
+          <Alert onClose={handleClose} severity="success" sx={{ width: '100%' }}>
+            Link copied to clipboard!
+          </Alert>
+        </Snackbar>
+
               </div>
             </div>
           </div>
