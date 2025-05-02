@@ -1,70 +1,72 @@
+'use client';
+
 import { ShieldCheck, Mail, Globe, Eye, UserCheck } from "lucide-react";
 
 export default function PrivacyPolicy() {
   return (
-    <div className="max-w-3xl mx-auto px-6 py-10 space-y-8 mt-20">
+    <div className="max-w-3xl mx-auto px-6 py-12 space-y-10 mt-24">
+      {/* Header */}
       <div className="flex items-center gap-3">
-        <ShieldCheck className="text-indigo-600 w-7 h-7" />
-        <h1 className="text-3xl font-bold">Privacy Policy</h1>
+        <ShieldCheck className="text-indigo-600 w-8 h-8" />
+        <h1 className="text-4xl font-bold tracking-tight text-gray-900">Privacy Policy</h1>
       </div>
       <p className="text-gray-600 text-lg">
-        This Privacy Policy explains how we collect, use, and protect your
-        personal information when you interact with this website.
+        This Privacy Policy explains how we collect, use, and protect your personal information when you interact with this website.
       </p>
 
-      {/* Section: Info Collection */}
-      <div className="space-y-2">
+      {/* Info Collection */}
+      <section className="space-y-2">
         <div className="flex items-center gap-2 text-xl font-semibold">
-          <UserCheck className="text-indigo-500" />
+          <UserCheck className="text-indigo-500 w-6 h-6" />
           <h2>Information We Collect</h2>
         </div>
-        <p className="text-gray-700">
-          We may collect basic personal details like your name and email via
-          contact forms. We also gather anonymous data (e.g., pages visited)
-          using simple analytics tools.
-        </p>
-      </div>
+        <ul className="list-disc list-inside text-gray-700 ml-2">
+          <li>Personal details like your name and email (via contact forms).</li>
+          <li>Anonymous analytics data (pages visited, device type, etc.).</li>
+        </ul>
+      </section>
 
-      {/* Section: Use of Info */}
-      <div className="space-y-2">
+      {/* Use of Info */}
+      <section className="space-y-2">
         <div className="flex items-center gap-2 text-xl font-semibold">
-          <Mail className="text-indigo-500" />
+          <Mail className="text-indigo-500 w-6 h-6" />
           <h2>How We Use Your Information</h2>
         </div>
-        <p className="text-gray-700">
-          We use your data to respond to messages, improve the site, or share
-          updates. We do not sell or share your data for advertising.
-        </p>
-      </div>
+        <ul className="list-disc list-inside text-gray-700 ml-2">
+          <li>To respond to your messages and inquiries.</li>
+          <li>To improve the website and user experience.</li>
+          <li>To send updates if you have opted in.</li>
+          <li>We do <span className="font-semibold text-indigo-600">not</span> sell or share your data for advertising.</li>
+        </ul>
+      </section>
 
-      {/* Section: Cookies */}
-      <div className="space-y-2">
+      {/* Cookies */}
+      <section className="space-y-2">
         <div className="flex items-center gap-2 text-xl font-semibold">
-          <Globe className="text-indigo-500" />
+          <Globe className="text-indigo-500 w-6 h-6" />
           <h2>Cookies</h2>
         </div>
         <p className="text-gray-700">
-          Cookies help us provide a smoother experience and collect
-          non-personal stats. You can turn them off in your browser settings.
+          Cookies help us provide a smoother experience and collect non-personal stats. You can disable cookies in your browser settings at any time.
         </p>
-      </div>
+      </section>
 
-      {/* Section: User Rights */}
-      <div className="space-y-2">
+      {/* User Rights */}
+      <section className="space-y-2">
         <div className="flex items-center gap-2 text-xl font-semibold">
-          <Eye className="text-indigo-500" />
+          <Eye className="text-indigo-500 w-6 h-6" />
           <h2>Your Rights</h2>
         </div>
-        <p className="text-gray-700">
-          You can request to view, correct, or delete your data by reaching out
-          via the contact form.
-        </p>
-      </div>
+        <ul className="list-disc list-inside text-gray-700 ml-2">
+          <li>Request to view, correct, or delete your data at any time.</li>
+          <li>Contact us for any privacy-related questions or requests.</li>
+        </ul>
+      </section>
 
-      {/* Section: Contact */}
-      <div className="space-y-2">
+      {/* Contact */}
+      <section className="space-y-2">
         <div className="flex items-center gap-2 text-xl font-semibold">
-          <Mail className="text-indigo-500" />
+          <Mail className="text-indigo-500 w-6 h-6" />
           <h2>Contact</h2>
         </div>
         <p className="text-gray-700">
@@ -73,14 +75,14 @@ export default function PrivacyPolicy() {
             href="/contact"
             className="text-indigo-600 underline hover:text-indigo-800"
           >
-            contact me
+            contact us
           </a>
           .
         </p>
-      </div>
+      </section>
 
-      <p className="text-sm text-gray-500 pt-6 border-t">
-        Last updated: May 1, 2025
+      <p className="text-sm text-gray-500 pt-8 border-t">
+        Last updated: May 2, 2025
       </p>
     </div>
   );
