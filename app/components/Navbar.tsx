@@ -8,7 +8,7 @@ import { X, Menu, Car } from 'lucide-react'; // Optional: install lucide icons
 const NavLink = ({ href, children, onClick }: { href: string; children: React.ReactNode; onClick?: () => void }) => (
   <Link
     href={href}
-    className="hover:text-[#ffcc00] transition-colors duration-300 ease-in-out"
+    className="hover:text-indigo-600 transition-colors duration-300 ease-in-out"
     onClick={onClick}
   >
     {children}
