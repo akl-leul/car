@@ -4,7 +4,7 @@ import React, { useState, useEffect } from 'react';
 import Snackbar from '@mui/material/Snackbar';
 import MuiAlert from '@mui/material/Alert'; 
 
-import { Gauge, Package, Settings, Car, Search, Filter, ChevronDown, ChevronUp, RefreshCw, Zap, Clock, Award } from 'lucide-react';
+import { Gauge, Package, Settings, Car, Search, Filter,Send  , ChevronDown, ChevronUp, RefreshCw, Zap, Clock, Award } from 'lucide-react';
 
 
 const products = [
@@ -721,7 +721,7 @@ const Alert = React.forwardRef(function Alert(props, ref) {
         
         {/* Full Details Modal */}
         {selectedCar && (
-          <div className="fixed inset-0 z-50 flex items-center justify-center backdrop-blur-sm bg-black bg-opacity-30">
+          <div className="fixed inset-0 z-50 flex items-center justify-center backdrop-blur-sm backdrop-blur-30">
             <div className="bg-white p-6 rounded-lg shadow-xl max-w-md w-full relative">
               <button
                 onClick={() => setSelectedCar(null)}
@@ -759,10 +759,10 @@ const Alert = React.forwardRef(function Alert(props, ref) {
 onClick={handleShareClick}
 className="mt-4 flex items-center justify-center w-full bg-blue-600 text-white py-2 px-4 rounded hover:bg-blue-700 transition"
 >
-Share this car
+Share <Send  className="w-5 h-5" />
 </button>
         
-    <Snackbar open={snackbarOpen} autoHideDuration={3000} onClose={handleClose}>
+    <Snackbar open={snackbarOpen} autoHideDuration={3000} onClose={handleClose} anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}>
           <Alert onClose={handleClose} severity="success" sx={{ width: '100%' }}>
             Link copied to clipboard!
           </Alert>
