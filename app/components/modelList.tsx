@@ -3,6 +3,7 @@
 import React, { useState, useEffect } from 'react'; 
 import Snackbar from '@mui/material/Snackbar';
 import MuiAlert from '@mui/material/Alert'; 
+import Image from 'next/image';
 
 import { Gauge,Frown , Package, Settings, Car, Search, Filter,Send  , ChevronDown, ChevronUp, RefreshCw, Zap, Clock, Award } from 'lucide-react';
 
@@ -624,23 +625,30 @@ const Alert = React.forwardRef(function Alert(props, ref) {
   
   return (
     <div className="bg-white">
-      <div  className="w-full h-[500px] flex items-center justify-center py-15 bg-gradient-to-r from-gray-900 via-gray-800 to-indigo-900 shadow-lg rounded-b-2xl mb-10">
-      <div className='flex flex-col items-center justify-center'>
-      <div className="flex items-center gap-4">
+      <div  className="w-full h-[500px] flex items-center grid grid-cols-1 gap-x-6 gap-y-10 sm:grid-cols-2 lg:grid-cols-2 xl:grid-cols-2 xl:gap-x-8 justify-center py-15 bg-gradient-to-r from-gray-900 via-gray-800 to-indigo-900 shadow-lg rounded-b-2xl mb-10">
+      <div className="flex flex-col items-center">
+        <div className="flex items-center gap-4">
         <Car className="w-10 h-10 text-blue-400 drop-shadow-lg" />
         <h1 className="text-4xl sm:text-5xl font-extrabold text-white tracking-tight">
           Luxury Cars
         </h1>
         <Award className="w-8 h-8 text-yellow-400 ml-2" />
-      </div>
-      <p className="mt-4 text-lg text-gray-200 font-medium max-w-2xl text-center">
+        </div>
+          <p className="mt-4 text-lg text-gray-200 font-medium max-w-2xl text-center">
         Discover, compare, and experience the world’s most exclusive cars and supercars. <br />
         Browse our curated list of luxury vehicles, from iconic grand tourers to cutting-edge hypercars.
-      </p>
+          </p>
+        </div>
+        <div>
+      <Image
+        src="/car-2.png"
+        alt="Car"
+        width={500}
+        height={300}
+      />
+    </div>
       </div>
-      <div>
-        dfdsg
-     </div>
+       
       <div className="mx-auto max-w-2xl px-4 py-16 sm:px-6 sm:py-24 lg:max-w-7xl lg:px-8">
         <h2 className="font-bold text-3xl mb-6">Luxury Cars</h2>
         
@@ -773,7 +781,7 @@ const Alert = React.forwardRef(function Alert(props, ref) {
                   />
                   
                   {/* Quick view button */}
-                  <div className="absolute inset-0 bg-black bg-opacity-0 group-hover:bg-opacity-30 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                  <div className="absolute inset-0 bg-gray-500 bg-opacity-800 group-hover:bg-opacity-30 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
                     <button 
                       onClick={(e) => {
                         e.stopPropagation();
