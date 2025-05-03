@@ -541,14 +541,10 @@ const [feedback, setFeedback] = useState('');
 const [feedbackSent, setFeedbackSent] = useState(false);
 
 
-const handleLike = () => {
-  if (!liked) {
+const handleLike = () => { 
     setLikeCount(likeCount + 1);
     setLiked(true);
-  } else {
-    setLikeCount(likeCount - 1);
-    setLiked(false);
-  }
+  
 };
 const handleFeedbackSubmit = (e) => {
   e.preventDefault();
