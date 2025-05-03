@@ -47,6 +47,7 @@ export default function Navbar() {
             <NavLink href="/cars" onClick={closeMenu}>Cars</NavLink>
             <NavLink href="/about" onClick={closeMenu}>About</NavLink>
             <NavLink href="/contact" onClick={closeMenu}>Contact</NavLink>
+            <NavLink href="/privacy" onClick={closeMenu}>Privacy Policy</NavLink>
           </div>
 
           {/* Hamburger Button */}
@@ -92,6 +93,7 @@ export default function Navbar() {
           <NavLink href="/cars" onClick={closeMenu}>Cars</NavLink>
           <NavLink href="/about" onClick={closeMenu}>About</NavLink>
           <NavLink href="/contact" onClick={closeMenu}>Contact</NavLink>
+          <NavLink href="/privacy" onClick={closeMenu}>Privacy Policy</NavLink>
         </nav>
       </aside>
       {/* Spacer for fixed navbar */}
