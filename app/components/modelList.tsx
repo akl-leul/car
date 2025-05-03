@@ -5,7 +5,7 @@ import Snackbar from '@mui/material/Snackbar';
 import MuiAlert from '@mui/material/Alert'; 
 import Image from 'next/image';
 
-import { Gauge,Frown , Package, Settings, Car, Search, Filter,Send  , ChevronDown, ChevronUp, RefreshCw, Zap, Clock, Award } from 'lucide-react';
+import { Gauge,Frown, Heart , Package, Settings, Car, Search, Filter,Send  , ChevronDown, ChevronUp, RefreshCw, Zap, Clock, Award } from 'lucide-react';
 
 
 const products = [
@@ -535,7 +535,29 @@ export default function ModelList() {
   const [quickViewCar, setQuickViewCar] = useState(null);
   const [showFilters, setShowFilters] = useState(false);
   const [snackbarOpen, setSnackbarOpen] = useState(false);
-  
+  const [liked, setLiked] = useState(false);
+const [likeCount, setLikeCount] = useState(0);
+const [feedback, setFeedback] = useState('');
+const [feedbackSent, setFeedbackSent] = useState(false);
+
+
+const handleLike = () => {
+  if (!liked) {
+    setLikeCount(likeCount + 1);
+    setLiked(true);
+  } else {
+    setLikeCount(likeCount - 1);
+    setLiked(false);
+  }
+};
+const handleFeedbackSubmit = (e) => {
+  e.preventDefault();
+  // Here you could send feedback to your backend
+  setFeedbackSent(true);
+  setFeedback('');
+  setTimeout(() => setFeedbackSent(false), 3000);
+};
+
   const [filters, setFilters] = useState({
     priceRange: [0, 5000000],
     engineTypes: [],
@@ -929,13 +951,51 @@ const Alert = React.forwardRef(function Alert(props, ref) {
                   <Car className="w-4 h-4 text-gray-500" />
                   <span><strong>Drivetrain:</strong> {selectedCar.specs.drivetrain}</span>
                 </div>
+                <div className='flex justify-around'>
                 <button
 onClick={handleShareClick}
-className="mt-4 flex items-center justify-center w-full bg-blue-600 text-white py-2 px-4 rounded hover:bg-blue-700 transition"
+className="mt-4 flex items-center justify-center  bg-blue-600 text-white py-2 px-4 rounded hover:bg-blue-700 transition"
 >
 Share <Send  className="w-5 h-5" />
 </button>
         
+          <button
+            onClick={handleLike}
+            className={`mt-4 flex items-center justify-center py-2 px-4 rounded  transition ${
+              liked ? 'bg-red-500 text-white' : 'bg-gray-200 text-gray-700'
+            }`}
+          >
+            <Heart className="w-5 h-5 mr-2" />
+            {liked ? 'Liked' : 'Like'}
+            <span className="ml-2">{likeCount}</span>
+          </button>
+       
+
+       
+        </div>
+         {/* Feedback form */}
+         <form onSubmit={handleFeedbackSubmit} className="mt-4">
+          <label className="block text-sm font-medium text-gray-700 mb-1">
+            Leave Feedback:
+          </label>
+          <textarea
+            value={feedback}
+            onChange={(e) => setFeedback(e.target.value)}
+            className="w-full border rounded px-3 py-2 mb-2"
+            rows={2}
+            placeholder="What do you think about this car?"
+            required
+          />
+          <button
+            type="submit"
+            className="bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700 transition"
+          >
+            Submit Feedback
+          </button>
+          {feedbackSent && (
+            <div className="text-green-600 mt-2">Thank you for your feedback!</div>
+          )}
+        </form> 
     <Snackbar open={snackbarOpen} autoHideDuration={3000} onClose={handleClose} anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}>
           <Alert onClose={handleClose} severity="success" sx={{ width: '100%' }}>
             Link copied to clipboard!
