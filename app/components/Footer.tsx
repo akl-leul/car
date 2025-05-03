@@ -15,6 +15,7 @@ export default function Footer() {
         {/* Links */}
         <div className="flex flex-col space-y-2">
           <h2 className="text-white text-xl font-extrabold">Links</h2>
+          <a href="/" className="footer-link">Home</a>
           <a href="/cars" className="footer-link">Cars</a>
           <a href="/about" className="footer-link">About Us</a>
           <a href="/contact" className="footer-link">Contact</a>

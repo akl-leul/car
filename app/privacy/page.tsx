@@ -1,10 +1,10 @@
 'use client';
 
-import { ShieldCheck, Mail, Globe, Eye, UserCheck } from "lucide-react";
+import { ShieldCheck, Mail, Cookie, Scale, UserCheck, BadgeInfo } from "lucide-react";
 
 export default function PrivacyPolicy() {
   return (
-    <div className="max-w-3xl mx-auto px-6 py-12 space-y-10 mt-24 mb-10 shadow-2xl">
+    <div className="max-w-3xl mx-auto px-6 py-12 space-y-10 mt-12 mb-10 shadow-2xl">
       {/* Header */}
       <div className="flex items-center gap-3">
         <ShieldCheck className="text-indigo-600 w-8 h-8" />
@@ -29,7 +29,7 @@ export default function PrivacyPolicy() {
       {/* Use of Info */}
       <section className="space-y-2">
         <div className="flex items-center gap-2 text-xl font-semibold">
-          <Mail className="text-indigo-500 w-6 h-6" />
+          <BadgeInfo className="text-indigo-500 w-6 h-6" />
           <h2>How We Use Your Information</h2>
         </div>
         <ul className="list-disc list-inside text-gray-700 ml-2">
@@ -43,7 +43,7 @@ export default function PrivacyPolicy() {
       {/* Cookies */}
       <section className="space-y-2">
         <div className="flex items-center gap-2 text-xl font-semibold">
-          <Globe className="text-indigo-500 w-6 h-6" />
+          <Cookie className="text-indigo-500 w-6 h-6" />
           <h2>Cookies</h2>
         </div>
         <p className="text-gray-700">
@@ -54,7 +54,7 @@ export default function PrivacyPolicy() {
       {/* User Rights */}
       <section className="space-y-2">
         <div className="flex items-center gap-2 text-xl font-semibold">
-          <Eye className="text-indigo-500 w-6 h-6" />
+          <Scale className="text-indigo-500 w-6 h-6" />
           <h2>Your Rights</h2>
         </div>
         <ul className="list-disc list-inside text-gray-700 ml-2">

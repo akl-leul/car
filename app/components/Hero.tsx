@@ -75,7 +75,7 @@ export default function Example() {
             href="/cars"
             className="rounded-md bg-indigo-600 px-6 py-2 text-base font-semibold text-white shadow hover:bg-indigo-500 transition"
           >
-            Get started
+           Browse Cars
           </a>
           <a href="/about" className="text-base font-semibold text-white hover:underline">
             Learn more &rarr;
