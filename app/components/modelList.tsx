@@ -624,12 +624,8 @@ const Alert = React.forwardRef(function Alert(props, ref) {
   
   return (
     <div className="bg-white">
-      <div  style={{
-          backgroundImage: "url('/car-2.png')",
-          backgroundSize: 'cover',
-          backgroundPosition: 'center', 
-          filter: 'brightness(0.6)', 
-        }} className="w-full h-[500px] flex flex-col items-center justify-center py-15 bg-gradient-to-r from-gray-900 via-gray-800 to-gray-900 shadow-lg rounded-b-2xl mb-10">
+      <div  className="w-full h-[500px] flex items-center justify-center py-15 bg-gradient-to-r from-gray-900 via-gray-800 to-indigo-900 shadow-lg rounded-b-2xl mb-10">
+      <div className='flex flex-col items-center justify-center'>
       <div className="flex items-center gap-4">
         <Car className="w-10 h-10 text-blue-400 drop-shadow-lg" />
         <h1 className="text-4xl sm:text-5xl font-extrabold text-white tracking-tight">
@@ -641,7 +637,10 @@ const Alert = React.forwardRef(function Alert(props, ref) {
         Discover, compare, and experience the world’s most exclusive cars and supercars. <br />
         Browse our curated list of luxury vehicles, from iconic grand tourers to cutting-edge hypercars.
       </p>
-    </div>
+      </div>
+      <div>
+        dfdsg
+     </div>
       <div className="mx-auto max-w-2xl px-4 py-16 sm:px-6 sm:py-24 lg:max-w-7xl lg:px-8">
         <h2 className="font-bold text-3xl mb-6">Luxury Cars</h2>
         
