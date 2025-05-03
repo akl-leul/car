@@ -114,24 +114,24 @@ export default function Example() {
         
       </div>
       <div className="relative z-20 bg-gray-50 py-12">
-  <h3 className="text-2xl font-semibold text-center mb-10">Featured Luxury Cars</h3>
+  <h3 className="text-2xl font-semibold text-center mb-10 ">Featured Luxury Cars</h3>
   <div className="flex overflow-x-auto gap-8 px-4"> 
-    <div className="min-w-[300px] bg-white shadow-xl rounded-lg p-4">
+    <div className="min-w-[300px] bg-white shadow-xl rounded-lg p-4 cursor-pointer">
       <img src="/rolls royce.webp" alt="Car 1" className="w-full h-40 object-cover rounded" />
       <div className="mt-4 font-bold text-lg">Rolls-Royce Phantom</div>
       <div className="text-gray-500">Ultimate luxury and comfort</div>
     </div>
-    <div className="min-w-[300px] bg-white shadow-xl rounded-lg p-4">
+    <div className="min-w-[300px] bg-white shadow-xl rounded-lg p-4 cursor-pointer">
       <img src="/mercedes maybach.avif" alt="Car 2" className="w-full h-40 object-cover rounded" />
       <div className="mt-4 font-bold text-lg">Mercedes-Maybach S680</div>
       <div className="text-gray-500">Executive-class comfort and advanced technology.</div>
     </div>
-    <div className="min-w-[300px] bg-white shadow-xl rounded-lg p-4">
+    <div className="min-w-[300px] bg-white shadow-xl rounded-lg p-4 cursor-pointer">
       <img src="/lamborghini_aventador_lamborghini-aventador-svj.avif" alt="Car 3" className="w-full h-40 object-cover rounded" />
       <div className="mt-4 font-bold text-lg">Lamborghini Aventador SVJ</div>
       <div className="text-gray-500">Extreme aerodynamics and speed with a 770 hp V12.</div>
     </div>
-    <div className="min-w-[300px] bg-white shadow-xl rounded-lg p-4">
+    <div className="min-w-[300px] bg-white shadow-xl rounded-lg p-4 cursor-pointer">
       <img src="/bently.webp" alt="Car 3" className="w-full h-40 object-cover rounded" />
       <div className="mt-4 font-bold text-lg">Bentley Continental GT</div>
       <div className="text-gray-500">Performance and style in one package with a W12 engine.</div>

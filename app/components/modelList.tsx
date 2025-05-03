@@ -4,7 +4,7 @@ import React, { useState, useEffect } from 'react';
 import Snackbar from '@mui/material/Snackbar';
 import MuiAlert from '@mui/material/Alert'; 
 
-import { Gauge, Package, Settings, Car, Search, Filter,Send  , ChevronDown, ChevronUp, RefreshCw, Zap, Clock, Award } from 'lucide-react';
+import { Gauge,Frown , Package, Settings, Car, Search, Filter,Send  , ChevronDown, ChevronUp, RefreshCw, Zap, Clock, Award } from 'lucide-react';
 
 
 const products = [
@@ -444,7 +444,7 @@ const products = [
     name: 'Pagani Huayra Roadster BC',
     href: '#',
     price: '$3,500,000',
-    imageSrc: 'https://cdn.motor1.com/images/mgl/0AN8b/s1/pagani-huayra-roadster-bc.jpg',
+    imageSrc: 'https://i1.wp.com/www.thesupercarblog.com/wp-content/uploads/2020/02/Pagani-Huayra-BC-Roadster-Blue-Carbon.jpg?fit=1280%2C936&ssl=1',
     imageAlt: 'Pagani Huayra Roadster BC in carbon fiber and red, with gullwing doors open.',
     description: 'A rolling sculpture. Italian artistry meets 800 hp of twin-turbo V12 fury, wrapped in carbon fiber and exclusivity.',
     specs: {
@@ -455,6 +455,74 @@ const products = [
       drivetrain: 'Rear-wheel drive',
     },
   },
+  
+  {
+    id: 30,
+    name: 'Mercedes-Maybach S-Class',
+    href: '#',
+    price: '$410,000',
+    imageSrc: 'https://imgd.aeplcdn.com/1056x594/n/oc85d3a_1570301.jpg?q=80',
+    imageAlt: 'Mercedes-Maybach S-Class, black, with chrome accents and opulent rear seating.',
+    description: 'The pinnacle of Mercedes luxury. Maybach S-Class blends advanced tech, comfort, and a 5980 cc turbocharged V12.',
+    specs: {
+      engineType: 'V12 Twin-Turbo',
+      engineLiter: '6.0L',
+      horsepower: '621 hp',
+      transmission: '9-speed automatic',
+      drivetrain: 'All-wheel drive',
+    },
+  },
+  {
+    id: 31,
+    name: 'Bugatti La Voiture Noire',
+    href: '#',
+    price: '$18,000,000',
+    imageSrc: 'https://cdn.motor1.com/images/mgl/0ANVb/s1/bugatti-la-voiture-noire.jpg',
+    imageAlt: 'Bugatti La Voiture Noire, a sleek black hypercar with a minimalist coupe design.',
+    description: 'A one-off masterpiece. Bugatti’s homage to the Type 57 SC Atlantic, boasting 1,500 hp and a body sculpted from black carbon fiber.',
+    specs: {
+      engineType: 'W16 Quad-Turbo',
+      engineLiter: '8.0L',
+      horsepower: '1,479 hp',
+      transmission: '7-speed dual-clutch',
+      drivetrain: 'All-wheel drive',
+    },
+  },
+  
+  {
+    id: 32,
+    name: 'Bugatti Centodieci',
+    href: '#',
+    price: '$9,000,000',
+    imageSrc: 'https://upload.wikimedia.org/wikipedia/commons/0/0f/2022_Bugatti_Centodieci_in_Grigio_Chiaro%2C_front_right1.jpg',
+    imageAlt: 'Bugatti Centodieci, white, with aggressive styling and distinctive rear wing.',
+    description: 'A tribute to the EB110, limited to just 10 units. Combines 1,578 hp with heritage-inspired design and cutting-edge aerodynamics.',
+    specs: {
+      engineType: 'W16 Quad-Turbo',
+      engineLiter: '8.0L',
+      horsepower: '1,578 hp',
+      transmission: '7-speed dual-clutch',
+      drivetrain: 'All-wheel drive',
+    },
+  },
+  
+  {
+    id: 33,
+    name: 'Pagani Zonda HP Barchetta',
+    href: '#',
+    price: '$17,000,000',
+    imageSrc: 'https://modelkars.com/wp-content/uploads/LCD18009PU-pagani-zonda-hp-purple-lcd-models-19.webp',
+    imageAlt: 'Pagani Zonda HP Barchetta, open-top, blue carbon with unique rear wheel covers.',
+    description: 'Pagani ultimate open-top creation. A celebration of design and raw V12 power, produced in extremely limited numbers.',
+    specs: {
+      engineType: 'V12 Naturally Aspirated',
+      engineLiter: '7.3L',
+      horsepower: '789 hp',
+      transmission: '6-speed manual',
+      drivetrain: 'Rear-wheel drive',
+    },
+  },
+  
 
 ];
 
@@ -555,7 +623,25 @@ const Alert = React.forwardRef(function Alert(props, ref) {
   };
   
   return (
-    <div className="bg-white mt-3">
+    <div className="bg-white">
+      <div  style={{
+          backgroundImage: "url('/car-2.png')",
+          backgroundSize: 'cover',
+          backgroundPosition: 'center', 
+          filter: 'brightness(0.6)', 
+        }} className="w-full h-[500px] flex flex-col items-center justify-center py-15 bg-gradient-to-r from-gray-900 via-gray-800 to-gray-900 shadow-lg rounded-b-2xl mb-10">
+      <div className="flex items-center gap-4">
+        <Car className="w-10 h-10 text-blue-400 drop-shadow-lg" />
+        <h1 className="text-4xl sm:text-5xl font-extrabold text-white tracking-tight">
+          Luxury Cars
+        </h1>
+        <Award className="w-8 h-8 text-yellow-400 ml-2" />
+      </div>
+      <p className="mt-4 text-lg text-gray-200 font-medium max-w-2xl text-center">
+        Discover, compare, and experience the world’s most exclusive cars and supercars. <br />
+        Browse our curated list of luxury vehicles, from iconic grand tourers to cutting-edge hypercars.
+      </p>
+    </div>
       <div className="mx-auto max-w-2xl px-4 py-16 sm:px-6 sm:py-24 lg:max-w-7xl lg:px-8">
         <h2 className="font-bold text-3xl mb-6">Luxury Cars</h2>
         
@@ -601,7 +687,7 @@ const Alert = React.forwardRef(function Alert(props, ref) {
 
             {searchTerm && filteredProducts.length === 0 && (
               <div className="absolute z-20 mt-2 w-full bg-white border border-gray-300 rounded-md shadow-lg p-4 text-gray-500">
-                No cars found matching your search.
+               <Frown /> Oops! Looks like we couldn’t find <span className="font-bold text-gray-700">"{searchTerm}"</span>
               </div>
             )}
           </div>
