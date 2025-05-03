@@ -5,7 +5,7 @@ import Snackbar from '@mui/material/Snackbar';
 import MuiAlert from '@mui/material/Alert'; 
 import Image from 'next/image';
 
-import { Gauge,Frown, Heart , Package, Settings, Car, Search, Filter,Send  , ChevronDown, ChevronUp, RefreshCw, Zap, Clock, Award } from 'lucide-react';
+import { Gauge,Frown, ThumbsUp , Package, Settings, Car, Search, Filter,Send  , ChevronDown, ChevronUp, RefreshCw, Zap, Clock, Award } from 'lucide-react';
 
 
 const products = [
@@ -961,7 +961,7 @@ Share <Send  className="w-5 h-5" />
               liked ? 'bg-red-500 text-white' : 'bg-gray-200 text-gray-700'
             }`}
           >
-            <Heart className="w-5 h-5 mr-2" />
+            <ThumbsUp className="w-5 h-5 mr-2" />
             {liked ? 'Liked' : 'Like'}
             <span className="ml-2">{likeCount}</span>
           </button>
