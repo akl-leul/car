@@ -5,7 +5,7 @@ import Snackbar from '@mui/material/Snackbar';
 import MuiAlert from '@mui/material/Alert'; 
 import Image from 'next/image';
 
-import { Gauge,Frown, ThumbsUp , Package, Settings, Car, Search, Filter,Send  , ChevronDown, ChevronUp, RefreshCw, Zap, Clock, Award } from 'lucide-react';
+import { Gauge,Frown,Download , ThumbsUp , Package, Settings, Car, Search, Filter,Send  , ChevronDown, ChevronUp, RefreshCw, Zap, Clock, Award } from 'lucide-react';
 
 
 const products = [
@@ -947,6 +947,8 @@ const Alert = React.forwardRef(function Alert(props, ref) {
                   <Car className="w-4 h-4 text-gray-500" />
                   <span><strong>Drivetrain:</strong> {selectedCar.specs.drivetrain}</span>
                 </div>
+
+                <hr className="my-6 border-t-1 border-gray-200" />
                 <div className='flex justify-around'>
                 <button
 onClick={handleShareClick}
@@ -966,7 +968,14 @@ Share <Send  className="w-5 h-5" />
             <span className="ml-2">{likeCount}</span>
           </button>
        
-
+          <a
+  href={selectedCar.imageSrc}
+  download={selectedCar.name.replace(/\s+/g, '_') + '.jpg'}
+  className="mt-4 flex items-center justify-center py-2 px-4 rounded bg-green-600 text-white hover:bg-green-700 transition ml-2"
+>
+  <Download className="w-5 h-5 mr-2" />
+  Download
+</a>
        
         </div>
          {/* Feedback form */}
